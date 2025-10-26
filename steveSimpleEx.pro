@@ -11,11 +11,13 @@ CONFIG += c++17
 SOURCES += \
     fftwstuff.cpp \
     main.cpp \
+    rec_arr_tool.cpp \
     widget.cpp
 
 HEADERS += \
     fftw3/fftw3.h \
     fftwstuff.h \
+    rec_arr_tool.h \
     widget.h
 
 FORMS += \

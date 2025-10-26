@@ -1,6 +1,7 @@
 #include "widget.h"
 #include "ui_widget.h"
 #include "fftwstuff.h"
+#include "rec_arr_tool.h"
 #include <QAudioDevice>
 #include <QAudioSource>
 #include <QtEndian>
@@ -70,6 +71,7 @@ Widget::Widget(QWidget *parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    Rec_Arr_Tool tc;
 }
 
 Widget::~Widget()
