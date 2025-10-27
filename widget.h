@@ -57,6 +57,8 @@ public:
 private slots:
     void on_btnDataInput_clicked();
 
+    void on_cboFrameEnds_currentTextChanged(const QString &arg1);
+
 private:
     Ui::Widget *ui;
 

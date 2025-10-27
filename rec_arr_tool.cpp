@@ -1,8 +1,10 @@
 #include "rec_arr_tool.h"
 #include <iostream>
 #include <math.h>
+#define ARR_SIZE 48000
 using namespace std;
 
+//double rec_arr[];
 
 // double rec_arr[rec_arr_size];
 double Pi = 3.14159265358979323846;
@@ -17,10 +19,10 @@ float lev_1, lev_2, lev_3;
 
 Rec_Arr_Tool::Rec_Arr_Tool()
 {
-    cout << "     ----->  this is from the conctrector" << endl;
+    cout << "     ----->  this is from the constructor" << endl;
     init_highest_bins();
-    cout << arr_size << " = ARR_SIZE" << endl;
-    cout << "     +++++++   ----->  this is END OF the conctrector" << endl;
+    cout << ARR_SIZE << " = ARR_SIZE" << endl;
+    cout << "     +++++++   ----->  this is END OF the constructor" << endl;
 }
 
 void Rec_Arr_Tool::look_rec_arr(int beg, int end)
@@ -29,7 +31,8 @@ void Rec_Arr_Tool::look_rec_arr(int beg, int end)
     cout << endl << "------------->    " << beg  << " { look_rec_arr  } " << end << endl;
     int i = beg;
     while (i < end) {
-        cout << i << " >  " << rec_arr[i]<<endl;
+        cout << i << " >  " << rec_arr[i] * 10000 <<endl;
+        cout << i << endl;
         i++;
     }
 }
@@ -75,10 +78,3 @@ void Rec_Arr_Tool::save_highest_bins(int bin, float level){
         return;}
     lev_3 = lev_2; bin_3 = bin_2; lev_2 = lev_1; bin_2 = bin_1; lev_1 = level; bin_1 = bin;
 }
-
-
-
-
-
-
-

@@ -2,6 +2,7 @@
 #include "ui_widget.h"
 #include "fftwstuff.h"
 #include "rec_arr_tool.h"
+#include "filewriter.h"
 #include <QAudioDevice>
 #include <QAudioSource>
 #include <QtEndian>
@@ -51,8 +52,6 @@ qreal AudioInfo::calculateLevel(const char *data, qint64 len)
         }
     }
     frame_cnt++;
-    qDebug() << "rec_arr_cnt in widget: " << rec_arr_cnt;
-    qDebug() << "frame " << frame_cnt << "  " << maxValue;
     return maxValue;
 }
 
@@ -71,7 +70,6 @@ Widget::Widget(QWidget *parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    Rec_Arr_Tool tc;
 }
 
 Widget::~Widget()
@@ -106,6 +104,10 @@ void Widget::restartAudioStream()
     if (!io)
         return;
 
+    Rec_Arr_Tool::zero_rec_arr();
+    Rec_Arr_Tool::make_sin(440.0,0,1024);
+    Rec_Arr_Tool::look_rec_arr(80,100);
+
     connect(io, &QIODevice::readyRead, [this, io]() {
         static const qint64 BufferSize = 4096;
         const qint64 len = qMin(m_audioSource->bytesAvailable(), BufferSize);
@@ -115,12 +117,18 @@ void Widget::restartAudioStream()
         if (l > 0) {
             const qreal level = m_audioInfo->calculateLevel(buffer.constData(), l);
             qDebug() << level;
+            QString temp2;
+            temp2.setNum(rec_arr_cnt);
+            ui->cboFrameEnds->addItem(temp2);
+
             if (m_audioInfo->frame_cnt > 100){
-                int frame_length = 1024;
+                int frame_length = 100;
                 int start = 10 * frame_length;
                 fftwStuff::DoIt(start, frame_length);
                 m_audioInfo->stop();
                 m_audioSource->stop();
+
+                filewriter::WriteData();
             }
         }
     });    
@@ -131,3 +139,11 @@ void Widget::on_btnDataInput_clicked()
     initializeWindow();
     initializeAudio(QMediaDevices::defaultAudioInput());
 }
+
+void Widget::on_cboFrameEnds_currentTextChanged(const QString &arg1)
+{
+    int beginframe = arg1.toInt();
+    qDebug() << beginframe;
+    Rec_Arr_Tool::look_rec_arr(beginframe, beginframe + 20);
+}
+

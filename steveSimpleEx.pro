@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     fftwstuff.cpp \
+    filewriter.cpp \
     main.cpp \
     rec_arr_tool.cpp \
     widget.cpp
@@ -17,6 +18,7 @@ SOURCES += \
 HEADERS += \
     fftw3/fftw3.h \
     fftwstuff.h \
+    filewriter.h \
     rec_arr_tool.h \
     widget.h
 
@@ -42,3 +44,6 @@ INCLUDEPATH += $$PWD/fftw3
 DEPENDPATH += $$PWD/fftw3
 
 unix|win32: LIBS += -L$$PWD/fftw3/ -llibfftw3-3 -llibfftw3f-3 -llibfftw3l-3
+
+RESOURCES += \
+    Resources.qrc

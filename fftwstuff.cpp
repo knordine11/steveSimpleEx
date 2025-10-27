@@ -5,7 +5,7 @@
 #include <iomanip>
 #include <QDebug>
 
-int rec_arr_cnt;
+
 
 fftwStuff::fftwStuff(QObject *parent)
     : QObject{parent}
@@ -37,7 +37,10 @@ void fftwStuff::DoIt(int frame_start, int length)
     std::cout << std::setprecision(2);
     for (size_t i = 0; i < N; i++)
     {
-        std::cout << fftwStuff::bin_freq(i, N, Fs) << " Hz : " << fftwStuff::abs(out[i]) << std::endl;
+        if (i > 220 and i < 440)
+        {
+            std::cout << fftwStuff::bin_freq(i, N, Fs) << " Hz : " << fftwStuff::abs(out[i]) << std::endl;
+        }
     }
     std::cout << "rec_arr_cnt: " << rec_arr_cnt << "  length: " << length << std::endl;
     fftw_destroy_plan(p);
